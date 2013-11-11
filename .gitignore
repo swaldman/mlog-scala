@@ -1,0 +1,12 @@
+*~
+*.class
+\#*\#
+\.\#*
+build/*
+dist/*
+tmp/*
+target/*
+project/target/*
+target/
+
+
