@@ -33,11 +33,15 @@
  * 
  */
 
-package com.mchange.sc.v1;
+package com.mchange.sc.v1.log;
 
 import com.mchange.v2.cfg.MultiPropertiesConfig;
 import com.mchange.v2.log.{MLog=>JMLog};
 
 object MLog {
-  def refreshConfig( overrides : Array[MultiPropertiesConfig] = null, overridesDescription : Option[String] = null ) : Unit = JMLog.refreshConfig( overrides, overridesDescription.getOrElse( null ) );
+  def refreshConfig( overrides : Option[Seq[MultiPropertiesConfig]] = None, overridesDescription : Option[String] = None ) : Unit = {
+    val DefaultOverrides : Array[MultiPropertiesConfig] = null;
+    val DefaultDesc : String = null;
+    JMLog.refreshConfig( overrides.fold( DefaultOverrides )( _.toArray[MultiPropertiesConfig]), overridesDescription.getOrElse( DefaultDesc ) );
+  }
 }
