@@ -35,5 +35,9 @@
 
 package com.mchange.sc.v1;
 
-package object log {
+import com.mchange.v2.cfg.MultiPropertiesConfig;
+import com.mchange.v2.log.{MLog=>JMLog};
+
+object MLog {
+  def refreshConfig( overrides : Array[MultiPropertiesConfig] = null, overridesDescription : Option[String] = null ) : Unit = JMLog.refreshConfig( overrides, overridesDescription.getOrElse( null ) );
 }
