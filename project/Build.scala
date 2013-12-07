@@ -11,9 +11,8 @@ object MLogScalaBuild extends Build {
   val mySettings = Seq( 
     Keys.organization := "com.mchange",
     Keys.name := projectName, 
-    Keys.version := "0.3.3", 
+    Keys.version := "0.3.2", 
     Keys.scalaVersion := "2.10.2",
-    Keys.autoScalaLibrary := false,
     Keys.publishTo <<= Keys.version { 
       (v: String) => {
 	if (v.trim.endsWith("SNAPSHOT"))
