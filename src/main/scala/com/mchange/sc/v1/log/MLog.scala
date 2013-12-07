@@ -1,5 +1,5 @@
 /*
- * Distributed as part of mlog-scala 0.3.1
+ * Distributed as part of mlog-scala 0.3.2
  *
  * Copyright (C) 2013 Machinery For Change, Inc.
  *
