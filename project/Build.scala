@@ -11,8 +11,8 @@ object MLogScalaBuild extends Build {
   val mySettings = Seq( 
     Keys.organization := "com.mchange",
     Keys.name := projectName, 
-    Keys.version := "0.3.2", 
-    Keys.scalaVersion := "2.10.2",
+    Keys.version := "0.3.3", 
+    Keys.scalaVersion := "2.10.3",
     Keys.publishTo <<= Keys.version { 
       (v: String) => {
 	if (v.trim.endsWith("SNAPSHOT"))
@@ -27,7 +27,7 @@ object MLogScalaBuild extends Build {
   );
 
   val dependencies = Seq(
-    "com.mchange" % "mchange-commons-java" % "0.2.6.3" 
+    "com.mchange" % "mchange-commons-java" % "0.2.6.5" 
   );
 
   override lazy val settings = super.settings ++ mySettings;
