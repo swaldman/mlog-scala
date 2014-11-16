@@ -62,6 +62,8 @@ object MLevel {
   case object OFF extends MLevel( com.mchange.v2.log.MLevel.OFF );
   case object SEVERE extends MLevel( com.mchange.v2.log.MLevel.SEVERE );
   case object WARNING extends MLevel( com.mchange.v2.log.MLevel.WARNING );
+
+  val TRACE = FINEST;
 }
 
 sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLevel ) {
