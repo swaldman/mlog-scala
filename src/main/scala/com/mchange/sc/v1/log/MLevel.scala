@@ -72,7 +72,7 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
   def log( message : =>String )( implicit logger : MLogger ) = doIf( logger.inner.log( _, message ) );
   def log( message : =>String, error : =>Throwable )( implicit logger : MLogger ) = doIf( logger.inner.log( _, message, error ) );
   def logFormat( message : =>String, params : Seq[Any] )( implicit logger : MLogger ) = doIf( logger.inner.log( _, message, params.toArray ) );
-  def logEvaluate[T]( expressionTag : => String )( expression : => T )( implicit logger : MLogger ) : T = {
+  def logEval[T]( expressionTag : => String )( expression : => T )( implicit logger : MLogger ) : T = {
     val expressionValue = expression;
     if ( logger.inner.isLoggable( _level ) ) {
       val prefix = if ( expressionTag == null ) "" else s"${expressionTag}: ";
@@ -82,7 +82,7 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
       expressionValue
     }
   }
-  def logEvaluate[T]( expression : => T )( implicit logger : MLogger ) : T = logEvaluate( null )( expression )( logger )
+  def logEval[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( null )( expression )( logger )
 }
 
 
