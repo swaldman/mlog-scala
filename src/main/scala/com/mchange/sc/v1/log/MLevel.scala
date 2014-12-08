@@ -35,6 +35,7 @@
 
 package com.mchange.sc.v1.log;
 
+import scala.util.{Try, Failure};
 import language.implicitConversions;
 
 object MLevel {
@@ -83,6 +84,22 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
     }
   }
   def logEval[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( null )( expression )( logger )
+
+  def attempt[T]( throwableTag : => String )( expression : => T )( implicit logger : MLogger ) : Try[T] = {
+    def maybeLog( t : Throwable, failure : Try[T] ) : Try[T] = {
+      if ( logger.inner.isLoggable( _level ) ) {
+        val prefix = if ( throwableTag == null ) "Handling throwable: " else s"${throwableTag}: ";
+        logger.inner.log( _level, s"${prefix}", t );
+      }
+      failure
+    }
+    Try( expression ) match {
+      case failure @ Failure( t ) => maybeLog( t, failure );
+      case success @ _ => success;
+    }
+  }
+  def attempt[T]( expression : => T )( implicit logger : MLogger ) : Try[T] = attempt(null)( expression )( logger )
+
 }
 
 
