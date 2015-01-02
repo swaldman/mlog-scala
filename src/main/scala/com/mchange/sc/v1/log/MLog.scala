@@ -1,7 +1,7 @@
 /*
- * Distributed as part of mlog-scala 0.3.2
+ * Distributed as part of mlog-scala 0.3.6
  *
- * Copyright (C) 2013 Machinery For Change, Inc.
+ * Copyright (C) 2015 Machinery For Change, Inc.
  *
  * Author: Steve Waldman <swaldman@mchange.com>
  *
