@@ -64,6 +64,7 @@ object MLevel {
   case object SEVERE extends MLevel( com.mchange.v2.log.MLevel.SEVERE );
   case object WARNING extends MLevel( com.mchange.v2.log.MLevel.WARNING );
 
+  val DEBUG = FINE;
   val TRACE = FINEST;
 }
 
@@ -85,7 +86,8 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
   }
   def logEval[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( null )( expression )( logger )
 
-  def attempt[T]( throwableTag : => String )( expression : => T )( implicit logger : MLogger ) : Try[T] = {
+  // overloading was more trouble than worth, because scalac had a hard time resolving ambiguities if T is a String.
+  def attemptWithLabel[T]( throwableTag : => String )( expression : => T )( implicit logger : MLogger ) : Try[T] = {
     def maybeLog( t : Throwable, failure : Try[T] ) : Try[T] = {
       if ( logger.inner.isLoggable( _level ) ) {
         val prefix = if ( throwableTag == null ) "Handling throwable: " else s"${throwableTag}: ";
@@ -98,7 +100,7 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
       case success @ _ => success;
     }
   }
-  def attempt[T]( expression : => T )( implicit logger : MLogger ) : Try[T] = attempt(null)( expression )( logger )
+  def attempt[T]( expression : => T )( implicit logger : MLogger ) : Try[T] = attemptWithLabel(null)( expression )( logger )
 
 }
 
