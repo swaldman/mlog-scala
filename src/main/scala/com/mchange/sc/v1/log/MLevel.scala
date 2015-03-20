@@ -102,6 +102,7 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
   }
   def attempt[T]( expression : => T )( implicit logger : MLogger ) : Try[T] = attemptWithLabel(null)( expression )( logger )
 
+  def apply[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( expression )( logger )
 }
 
 
