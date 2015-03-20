@@ -95,6 +95,7 @@ class MLogger( private[log] val inner : com.mchange.v2.log.MLogger ){
   
   def severe(message : =>String) = levelMessage(SEVERE, message);
   def warning(message : =>String) = levelMessage(WARNING, message);
+  def warn(message : =>String) = warning( message );
   def info(message : =>String) = levelMessage(INFO, message);
   def config(message : =>String) = levelMessage(CONFIG, message);
   def fine(message : =>String) = levelMessage(FINE, message);
