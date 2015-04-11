@@ -89,8 +89,9 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
   // overloading was more trouble than worth, because scalac had a hard time resolving ambiguities if T is a String.
   def attemptWithLabel[T]( throwableTag : => String )( expression : => T )( implicit logger : MLogger ) : Try[T] = {
     def maybeLog( t : Throwable, failure : Try[T] ) : Try[T] = {
+      val tt = throwableTag;
       if ( logger.inner.isLoggable( _level ) ) {
-        val prefix = if ( throwableTag == null ) "Handling throwable: " else s"${throwableTag}: ";
+        val prefix = if ( tt == null ) "Handling throwable: " else s"${tt}: ";
         logger.inner.log( _level, s"${prefix}", t );
       }
       failure
