@@ -74,17 +74,18 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
   def log( message : =>String )( implicit logger : MLogger ) = doIf( logger.inner.log( _, message ) );
   def log( message : =>String, error : =>Throwable )( implicit logger : MLogger ) = doIf( logger.inner.log( _, message, error ) );
   def logFormat( message : =>String, params : Seq[Any] )( implicit logger : MLogger ) = doIf( logger.inner.log( _, message, params.toArray ) );
-  def logEval[T]( expressionTag : => String )( expression : => T )( implicit logger : MLogger ) : T = {
+  def logEval[T]( label : => String )( expression : => T )( implicit logger : MLogger ) : T = {
     val expressionValue = expression;
     if ( logger.inner.isLoggable( _level ) ) {
-      val prefix = if ( expressionTag == null ) "" else s"${expressionTag}: ";
+      val labelValue = label;
+      val prefix = if ( labelValue == "" ) "" else s"${labelValue}: ";
       logger.inner.log( _level, s"${prefix}${expressionValue}" );
       expressionValue
     } else {
       expressionValue
     }
   }
-  def logEval[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( null )( expression )( logger )
+  def logEval[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( "" )( expression )( logger )
 
   // overloading was more trouble than worth, because scalac had a hard time resolving ambiguities if T is a String.
   def attemptWithLabel[T]( throwableTag : => String )( expression : => T )( implicit logger : MLogger ) : Try[T] = {
