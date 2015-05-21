@@ -42,6 +42,11 @@ object MLevel {
 
   implicit def toJavaLevel( scalaLevel : MLevel ) : com.mchange.v2.log.MLevel = scalaLevel._level;
 
+  // convenience factories
+  def mlogger( str : String )   : MLogger = MLogger( str );
+  def mlogger( clz : Class[_] ) : MLogger = MLogger( clz );
+  def mlogger( obj : Any )      : MLogger = MLogger( obj );
+
   private[log] def forInner( inner : com.mchange.v2.log.MLevel ) : MLevel = inner match {
     case com.mchange.v2.log.MLevel.ALL => ALL
     case com.mchange.v2.log.MLevel.CONFIG => CONFIG
@@ -66,6 +71,23 @@ object MLevel {
 
   val DEBUG = FINE;
   val TRACE = FINEST;
+
+  implicit class LogEvalOps[T]( val expression : T ) extends AnyVal {
+    def allEval( implicit logger : MLogger )     : T = ALL.logEval( expression )( logger )
+    def configEval( implicit logger : MLogger )  : T = CONFIG.logEval( expression )( logger )
+    def fineEval( implicit logger : MLogger )    : T = FINE.logEval( expression )( logger )
+    def finerEval( implicit logger : MLogger )   : T = FINER.logEval( expression )( logger )
+    def finestEval( implicit logger : MLogger )  : T = FINEST.logEval( expression )( logger )
+    def infoEval( implicit logger : MLogger )    : T = INFO.logEval( expression )( logger )
+    def severeEval( implicit logger : MLogger )  : T = SEVERE.logEval( expression )( logger )
+    def warningEval( implicit logger : MLogger ) : T = WARNING.logEval( expression )( logger )
+
+    def debugEval( implicit logger : MLogger )   : T = DEBUG.logEval( expression )( logger )
+    def traceEval( implicit logger : MLogger )   : T = TRACE.logEval( expression )( logger )
+
+    def logEval( implicit logger : MLogger )  : T = allEval( logger )
+    def warnEval( implicit logger : MLogger ) : T = warningEval( logger )
+  }
 }
 
 sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLevel ) {
@@ -104,7 +126,8 @@ sealed abstract class MLevel ( private[log] val _level : com.mchange.v2.log.MLev
   }
   def attempt[T]( expression : => T )( implicit logger : MLogger ) : Try[T] = attemptWithLabel(null)( expression )( logger )
 
-  def apply[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( expression )( logger )
+  // i think the implicit postfix format is better.
+  //def apply[T]( expression : => T )( implicit logger : MLogger ) : T = logEval( expression )( logger )
 }
 
 

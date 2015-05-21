@@ -48,9 +48,11 @@ object MLogger {
     new MLogger( unwrapped );
   }
 
-  def apply( clz : Class[_] ) : MLogger = apply( clz.getName );
+  def apply( clz : Class[_] ) : MLogger = apply( fixupClassName( clz.getName ) );
 
-  def apply( obj : Any ) : MLogger = apply ( obj.getClass );
+  def apply( obj : Any ) : MLogger = apply( obj.getClass );
+
+  private def fixupClassName( clzName : String ) : String = clzName.reverse.dropWhile( _ == '$' ).map( c => if ( c == '$' ) '.' else c ).reverse
 }
 
 class MLogger( private[log] val inner : com.mchange.v2.log.MLogger ){
