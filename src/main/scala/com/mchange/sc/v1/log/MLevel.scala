@@ -73,7 +73,6 @@ object MLevel {
   val TRACE = FINEST;
 
   implicit class LogEvalOps[T]( val expression : T ) extends AnyVal {
-    def allEval( implicit logger : MLogger )     : T = ALL.logEval( expression )( logger )
     def configEval( implicit logger : MLogger )  : T = CONFIG.logEval( expression )( logger )
     def fineEval( implicit logger : MLogger )    : T = FINE.logEval( expression )( logger )
     def finerEval( implicit logger : MLogger )   : T = FINER.logEval( expression )( logger )
@@ -85,7 +84,7 @@ object MLevel {
     def debugEval( implicit logger : MLogger )   : T = DEBUG.logEval( expression )( logger )
     def traceEval( implicit logger : MLogger )   : T = TRACE.logEval( expression )( logger )
 
-    def logEval( implicit logger : MLogger )  : T = allEval( logger )
+    def logEval( implicit logger : MLogger )  : T = infoEval( logger )
     def warnEval( implicit logger : MLogger ) : T = warningEval( logger )
   }
 }
