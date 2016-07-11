@@ -36,4 +36,31 @@
 package com.mchange.sc.v1;
 
 package object log {
+
+  /**
+   *  Conveniently log stuff when an Option turns up NONE
+   */  
+  implicit class LoggableOption[T]( val maybe : Option[T] ) extends AnyVal {
+    import MLevel._
+
+    def logFail( level : MLevel, message : =>String )( implicit logger : MLogger ) : Option[T] = {
+      maybe orElse {
+        logger.log( level, message )
+        maybe
+      }
+    }
+    def xall( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( ALL, message )( logger )
+    def xconfig( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( CONFIG, message )( logger )
+    def xfine( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( FINE, message )( logger )
+    def xfiner( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( FINER, message )( logger )
+    def xfinest( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( FINEST, message )( logger )
+    def xinfo( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( INFO, message )( logger )
+    def xsevere( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( SEVERE, message )( logger )
+    def xwarning( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( WARNING, message )( logger )
+
+    def xdebug( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( DEBUG, message )( logger )
+    def xtrace( message : =>String )( implicit logger : MLogger ) : Option[T] = logFail( TRACE, message )( logger )
+
+    def xwarn( message : =>String )( implicit logger : MLogger ) : Option[T] = xwarning( message )( logger )
+  }
 }

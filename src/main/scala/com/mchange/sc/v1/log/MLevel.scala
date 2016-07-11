@@ -42,6 +42,8 @@ object MLevel {
 
   implicit def toJavaLevel( scalaLevel : MLevel ) : com.mchange.v2.log.MLevel = scalaLevel._level;
 
+  implicit def toLoggableOption[T]( maybe : Option[T] ) = new LoggableOption[T]( maybe ) 
+
   // convenience factories
   def mlogger( str : String )   : MLogger = MLogger( str );
   def mlogger( clz : Class[_] ) : MLogger = MLogger( clz );
