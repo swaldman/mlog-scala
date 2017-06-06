@@ -27,7 +27,7 @@ object MLogScalaBuild extends Build {
   );
 
   val dependencies = Seq(
-    "com.mchange" % "mchange-commons-java" % "0.2.12" 
+    "com.mchange" % "mchange-commons-java" % "0.2.13-SNAPSHOT" 
   );
 
   override lazy val settings = super.settings ++ mySettings;
@@ -35,7 +35,7 @@ object MLogScalaBuild extends Build {
   lazy val mainProject = Project(
     id = projectName,
     base = file("."),
-    settings = Project.defaultSettings ++ (Keys.libraryDependencies ++= dependencies)
+    settings = Defaults.coreDefaultSettings ++ (Keys.libraryDependencies ++= dependencies)
   ); 
 
   val pomExtraXml = (
