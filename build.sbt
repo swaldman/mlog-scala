@@ -44,9 +44,9 @@ lazy val root = project
   .settings(
     organization        :=  "com.mchange",
     name                :=  projectName,
-    version             :=  "0.3.14",
-    scalaVersion        :=  "2.12.15",
-    crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.15","2.13.6","3.0.2"),
+    version             :=  "0.3.15-SNAPSHOT",
+    scalaVersion        :=  "2.12.18",
+    crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.18","2.13.12","3.3.1"),
     scalacOptions       ++= Seq("-deprecation", "-feature"),
     libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.2.20",
     pomExtra            :=  pomExtraXml
