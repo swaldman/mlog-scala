@@ -44,7 +44,7 @@ lazy val root = project
   .settings(
     organization        :=  "com.mchange",
     name                :=  projectName,
-    version             :=  "0.3.15-SNAPSHOT",
+    version             :=  "0.3.15",
     scalaVersion        :=  "2.12.18",
     crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.18","2.13.12","3.3.1"),
     scalacOptions       ++= Seq("-deprecation", "-feature"),
