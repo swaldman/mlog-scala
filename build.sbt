@@ -10,9 +10,15 @@ ThisBuild / publishTo := {
   if (isSnapshot.value) Some("snapshots" at nexusSnapshots ) else Some("staging" at nexusStaging )
 }
 
-val projectName = "mlog-scala"
+ThisBuild / organization       := "com.mchange"
+ThisBuild / version            := "0.4.0-SNAPSHOT"
+ThisBuild / scalaVersion       := "2.12.20"
+ThisBuild / scalacOptions      := Seq("-deprecation", "-feature")
 
-val pomExtraXml = (
+val mainProjectName     = "mlog-scala"
+val zioProjectName      = "mlog-scala-zio"
+
+def pomExtraXml(projectName : String) = (
       <url>https://github.com/swaldman/{projectName}</url>
       <licenses>
         <license>
@@ -42,13 +48,20 @@ val pomExtraXml = (
 lazy val root = project
   .in(file("."))
   .settings(
-    organization        :=  "com.mchange",
-    name                :=  projectName,
-    version             :=  "0.3.16-SNAPSHOT",
-    scalaVersion        :=  "2.12.20",
+    name                :=  mainProjectName,
     crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.20","2.13.16","3.3.6"),
-    scalacOptions       ++= Seq("-deprecation", "-feature"),
-    libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.2.20",
-    pomExtra            :=  pomExtraXml
+    libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.3.2",
+    pomExtra            :=  pomExtraXml(mainProjectName)
   )
+
+lazy val zio = project
+  .in(file("zio"))
+  .settings(
+    name                :=  zioProjectName,
+    crossScalaVersions  :=  Seq("2.12.20","2.13.16","3.3.6"),
+    scalacOptions       ++= Seq("-deprecation", "-feature"),
+    libraryDependencies +=  "dev.zio" %% "zio" % "2.1.18",
+    pomExtra            :=  pomExtraXml(zioProjectName)
+  )
+
 
