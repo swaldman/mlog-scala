@@ -12,7 +12,7 @@ ThisBuild / publishTo := {
 
 ThisBuild / organization       := "com.mchange"
 ThisBuild / version            := "0.4.0-SNAPSHOT"
-ThisBuild / scalaVersion       := "2.12.20"
+ThisBuild / scalaVersion       := "3.3.6"
 ThisBuild / scalacOptions      := Seq("-deprecation", "-feature")
 
 val mainProjectName     = "mlog-scala"
@@ -54,12 +54,13 @@ lazy val root = project
     pomExtra            :=  pomExtraXml(mainProjectName)
   )
 
+// for now, no crossScalaVersions, we've implemented mlog-scala-zio in Scala 3 style.
+// it could easily be backported to 2.12 and 2.13 if that seems worth it someday
 lazy val zio = project
+  .dependsOn(root)
   .in(file("zio"))
   .settings(
     name                :=  zioProjectName,
-    crossScalaVersions  :=  Seq("2.12.20","2.13.16","3.3.6"),
-    scalacOptions       ++= Seq("-deprecation", "-feature"),
     libraryDependencies +=  "dev.zio" %% "zio" % "2.1.18",
     pomExtra            :=  pomExtraXml(zioProjectName)
   )
