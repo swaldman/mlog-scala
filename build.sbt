@@ -11,7 +11,7 @@ ThisBuild / publishTo := {
 }
 
 ThisBuild / organization       := "com.mchange"
-ThisBuild / version            := "0.4.0-SNAPSHOT"
+ThisBuild / version            := "0.4.0"
 ThisBuild / scalaVersion       := "3.3.6"
 ThisBuild / scalacOptions      := Seq("-deprecation", "-feature")
 
