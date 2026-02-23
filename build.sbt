@@ -1,18 +1,11 @@
-val nexus = "https://oss.sonatype.org/"
-val nexusSnapshots = nexus + "content/repositories/snapshots"
-val nexusStaging = nexus + "service/local/staging/deploy/maven2"
-
-ThisBuild / resolvers += ("releases" at nexusStaging)
-ThisBuild / resolvers += ("snapshots" at nexusSnapshots)
-ThisBuild / resolvers += ("Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/")
-
 ThisBuild / publishTo := {
-  if (isSnapshot.value) Some("snapshots" at nexusSnapshots ) else Some("staging" at nexusStaging )
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (version.value.endsWith("-SNAPSHOT")) Some("central-snapshots" at centralSnapshots) else localStaging.value
 }
 
 ThisBuild / organization       := "com.mchange"
-ThisBuild / version            := "0.4.0"
-ThisBuild / scalaVersion       := "3.3.6"
+ThisBuild / version            := "0.4.1"
+ThisBuild / scalaVersion       := "3.3.7"
 ThisBuild / scalacOptions      := Seq("-deprecation", "-feature")
 
 val mainProjectName     = "mlog-scala"
@@ -49,8 +42,8 @@ lazy val root = project
   .in(file("."))
   .settings(
     name                :=  mainProjectName,
-    crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.20","2.13.16","3.3.6"),
-    libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.3.2",
+    crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.21","2.13.18","3.3.7"),
+    libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.4.0",
     pomExtra            :=  pomExtraXml(mainProjectName)
   )
 
@@ -61,7 +54,7 @@ lazy val zio = project
   .in(file("zio"))
   .settings(
     name                :=  zioProjectName,
-    libraryDependencies +=  "dev.zio" %% "zio" % "2.1.18",
+    libraryDependencies +=  "dev.zio" %% "zio" % "2.1.24",
     pomExtra            :=  pomExtraXml(zioProjectName)
   )
 
