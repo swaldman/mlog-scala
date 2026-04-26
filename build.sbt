@@ -4,7 +4,7 @@ ThisBuild / publishTo := {
 }
 
 ThisBuild / organization       := "com.mchange"
-ThisBuild / version            := "0.4.1"
+ThisBuild / version            := "0.4.2"
 ThisBuild / scalaVersion       := "3.3.7"
 ThisBuild / scalacOptions      := Seq("-deprecation", "-feature")
 
@@ -43,7 +43,7 @@ lazy val root = project
   .settings(
     name                :=  mainProjectName,
     crossScalaVersions  :=  Seq("2.10.7","2.11.12","2.12.21","2.13.18","3.3.7"),
-    libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.4.0",
+    libraryDependencies +=  "com.mchange" % "mchange-commons-java" % "0.5.0",
     pomExtra            :=  pomExtraXml(mainProjectName)
   )
 
